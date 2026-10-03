@@ -1,0 +1,26 @@
+name: Source release checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  contracts:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: pip install -r tests/requirements.txt
+      - run: python installer/build_release.py scan
+      - run: python -m unittest discover -s tests -v
+      - run: python -m unittest discover -s server/pipeline/tests -v
+        env:
+          PYTHONPATH: server/pipeline/src:server/pipeline/tools
+      - run: python mobile/tests/run_contract_tests.py
+      - run: python mobile/tests/run_firewall_tests.py
+      - run: python server/organization/test_acceptance.py
+      - run: python server/summary-assistant/test_openclaw_output.py
