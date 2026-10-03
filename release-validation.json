@@ -1,0 +1,51 @@
+{
+  "release": "0.1.0",
+  "date": "2026-10-03",
+  "installer": {
+    "linux_and_windows_staging_tests": 9,
+    "passed": true,
+    "services_started": false
+  },
+  "pipeline": {
+    "linux_python": "3.12.3",
+    "tests": 89,
+    "passed": true,
+    "duration_seconds": 3.459,
+    "fixtures": "synthetic and mocked; no cloud requests"
+  },
+  "mobile": {
+    "protocol_checks": 48,
+    "firewall_policy_checks": 6,
+    "manifest_checks": true,
+    "passed": true,
+    "android_device_tested": false,
+    "unsigned_apk_build": true,
+    "formal_signature_tested": false
+  },
+  "weknora_overlay": {
+    "base": "9114e4e4f905be71976a77c684d3f92731e6f9a6",
+    "git_apply_check": true,
+    "full_upstream_build_in_this_release": false
+  },
+  "secret_scan": {
+    "findings": 0,
+    "runtime_data_included": false,
+    "scope": "allowlisted source, examples and documentation"
+  },
+  "limits": [
+    "Not a blank-machine full-stack installer",
+    "Optional modules require separate configuration and dependencies",
+    "Production queues and configuration unchanged",
+    "No new GPU benchmark claimed",
+    "No real-client MCP or Android acceptance claimed"
+  ],
+  "organization": {
+    "tests": 7,
+    "passed": true
+  },
+  "summary_output": {
+    "tests": 3,
+    "passed": true,
+    "cloud_calls": 0
+  }
+}
