@@ -1,0 +1,5 @@
+# Verified separate /opt/mineru-vllm runtime; do not install into the sync venv.
+llama-cpp-python==0.3.35
+fastapi==0.141.1
+httpx==0.28.1
+uvicorn==0.53.0

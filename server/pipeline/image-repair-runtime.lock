@@ -1,0 +1,7 @@
+# Auxiliary CPU runtime only; primary MinerU/Ollama/DocReader are unchanged.
+paddlepaddle==3.2.2
+paddleocr==3.7.0
+paddlex==3.7.2
+# PaddlePaddle is installed in /opt/weknora-image-repair-venv.
+# Other dependencies are read-only imports from the existing DocReader venv.
+# Startup rejects unexpected framework/OCR/PaddleX versions or CUDA builds.
