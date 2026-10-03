@@ -2,7 +2,7 @@
 
 原生 Java 界面，不使用 WebView。公开默认域名为 `https://kb.example.com`，请在客户端设置中填写自己的 HTTPS 服务地址并登录。模型密钥在服务器配置，手机不持有提供商密钥。
 
-需要 JDK 17、Android SDK platform 35 和 build-tools 35.0.0；设置 `JAVA_HOME`、`ANDROID_SDK_ROOT`。
+需要 JDK 17、Android SDK platform 35 和 build-tools 35.0.0；设置 `JAVA_HOME`、`ANDROID_SDK_ROOT`。Windows 的 AAPT2 原生工具对中文路径支持有限，请将源码与 SDK 放在英文路径下构建。
 
 ```bash
 python build.py
