@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "weilan-knowledge": {
+      "type": "streamable_http",
+      "url": "https://kb.example.com/mcp/CHANGE_ME_ENDPOINT_ID",
+      "headers": {"Authorization": "Bearer CHANGE_ME_REVOCABLE_TOKEN"}
+    }
+  }
+}
