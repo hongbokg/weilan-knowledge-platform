@@ -1,0 +1,42 @@
+[Unit]
+Description=Checkpointed local repair of missing image OCR text
+After=network-online.target weknora-nas-runtime.service
+Wants=network-online.target
+Requires=weknora-nas-runtime.service
+PartOf=weknora-nas-runtime.service
+RequiresMountsFor=/data/archive /run/weknora-work
+
+[Service]
+Type=simple
+User=weilan
+Group=weilan
+UMask=0077
+WorkingDirectory=/opt/weknora-nas-sync
+ExecStartPre=/usr/bin/install -d -m 0700 /run/weknora-work/image-repair
+ExecStart=/opt/weknora-image-repair-venv/bin/python /opt/weknora-nas-sync/image_repair.py --daemon --promote --limit 2 --page-budget 4
+Environment=PYTHONUNBUFFERED=1
+Environment=CUDA_VISIBLE_DEVICES=
+Environment=PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK=True
+Environment=PADDLE_PDX_CACHE_HOME=/run/weknora-work/image-repair
+Environment=HOME=/run/weknora-work/image-repair
+Environment=XDG_CACHE_HOME=/run/weknora-work/image-repair
+Environment=OMP_NUM_THREADS=6
+Environment=OPENBLAS_NUM_THREADS=1
+NoNewPrivileges=true
+PrivateDevices=true
+DevicePolicy=closed
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/data/weknora/nas-sync /data/archive/nas-sync /run/weknora-work/nas-sync /run/weknora-work/image-repair
+CPUQuota=600%
+MemoryHigh=6G
+MemoryMax=8G
+MemorySwapMax=0
+TasksMax=128
+Restart=on-failure
+RestartSec=600
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target
