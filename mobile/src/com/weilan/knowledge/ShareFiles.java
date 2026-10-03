@@ -1,0 +1,7 @@
+package com.weilan.knowledge;
+import java.io.*;import java.util.*;
+final class ShareFiles {
+ static String safeName(String name){String n=name.replaceAll("[\\\\/:*?\"<>|\\p{Cntrl}]","_");return n.isEmpty()||n.equals(".")||n.equals("..")?"文件":n.substring(0,Math.min(n.length(),150));}
+ static File resolve(File root,String key,String name)throws IOException{if(!key.matches("[a-f0-9-]{36}"))throw new IOException("无效文件标识");File file=new File(new File(root,key),name).getCanonicalFile();File dir=new File(root,key).getCanonicalFile();if(!file.getParentFile().equals(dir)||!dir.getParentFile().equals(root.getCanonicalFile()))throw new IOException("无效文件路径");return file;}
+ static String mime(String name){String n=name.toLowerCase(Locale.ROOT);if(n.endsWith(".pdf"))return "application/pdf";if(n.endsWith(".doc"))return "application/msword";if(n.endsWith(".docx"))return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";if(n.endsWith(".xls"))return "application/vnd.ms-excel";if(n.endsWith(".xlsx"))return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";if(n.endsWith(".ppt"))return "application/vnd.ms-powerpoint";if(n.endsWith(".pptx"))return "application/vnd.openxmlformats-officedocument.presentationml.presentation";if(n.endsWith(".jpg")||n.endsWith(".jpeg"))return "image/jpeg";if(n.endsWith(".png"))return "image/png";if(n.endsWith(".txt"))return "text/plain";return "application/octet-stream";}
+}
