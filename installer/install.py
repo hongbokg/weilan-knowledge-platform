@@ -33,6 +33,9 @@ def verify_bundle(root=ROOT):
  manifest=root/'MANIFEST.json'
  if not manifest.exists():raise ValueError('missing_release_manifest')
  expected=json.loads(manifest.read_text(encoding='utf-8'))['files']
+ ignored={'.git','__pycache__','build','node_modules','.pytest_cache'}
+ present={p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file() and not any(x in ignored for x in p.relative_to(root).parts) and p.name not in {'MANIFEST.json','SHA256SUMS'}}
+ if present!=set(expected):raise ValueError('unlisted_or_missing_package_file')
  for name,digest in expected.items():
   original=root/name
   path=original.resolve()
