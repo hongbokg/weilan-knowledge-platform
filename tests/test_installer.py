@@ -7,14 +7,14 @@ mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
 
 class InstallerTests(unittest.TestCase):
  def config(self):
-  c=json.loads((ROOT/'config/config.example.json').read_text())
+  c=json.loads((ROOT/'config/config.example.json').read_text(encoding='utf-8'))
   c.update(nas_url='https://nas.local',nas_user='reader',nas_password='test-only-password',api_key='test-only-key',archive_uuid='test-only-uuid')
   return c
  def test_plan_never_starts_or_downloads_models(self):
   p=mod.make_plan();self.assertFalse(p['automatic_start']);self.assertIn('model weights',p['not_installed'])
  def test_valid_config(self):self.assertTrue(mod.validate_config(self.config()))
  def test_examples_cannot_activate(self):
-  with self.assertRaises(ValueError):mod.validate_config(json.loads((ROOT/'config/config.example.json').read_text()))
+  with self.assertRaises(ValueError):mod.validate_config(json.loads((ROOT/'config/config.example.json').read_text(encoding='utf-8')))
  def test_credentials_require_tls(self):
   for change in [{'nas_url':'http://nas.local'},{'nas_ca':False},{'nas_url':'https://user:password@nas.local'}]:
    c=self.config();c.update(change)
@@ -39,5 +39,10 @@ class InstallerTests(unittest.TestCase):
    p=Path(tmp);(p/'file').write_text('wrong')
    (p/'MANIFEST.json').write_text(json.dumps({'files':{'file':'not-the-digest'}}))
    with self.assertRaises(ValueError):mod.verify_bundle(p)
+ def test_unlisted_source_cannot_be_installed(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   p=Path(tmp);(p/'MANIFEST.json').write_text(json.dumps({'files':{}}))
+   (p/'extra.py').write_text('unlisted')
+   with self.assertRaisesRegex(ValueError,'unlisted'):mod.verify_bundle(p)
 
 if __name__=='__main__':unittest.main()

@@ -4,3 +4,5 @@ httpx==0.28.1
 opencv-python-headless>=4.10,<5
 numpy>=2,<3
 cryptography>=43
+-r ../server/organization/requirements.txt
+-r ../server/summary-assistant/requirements.txt
