@@ -1,0 +1,11 @@
+{
+  "release": "0.1.0",
+  "assembled_at": "2026-10-03",
+  "pipeline_commit": "d6d783d",
+  "pipeline_branch": "optimize/a2-cpu-gpu-routing",
+  "weknora_base_commit": "9114e4e4f905be71976a77c684d3f92731e6f9a6",
+  "source_scope": "allowlisted source only; no production databases, model weights, credentials or Git history",
+  "production_code_snapshot": true,
+  "automatic_installer_scope": "NAS ingestion addon; existing WeKnora and MinerU are prerequisites",
+  "endpoint_export": "deployment-specific domains replaced with examples in public source"
+}
